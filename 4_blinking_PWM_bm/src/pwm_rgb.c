@@ -31,9 +31,9 @@
  *
  */
 
-/** \brief Blinking Bare Metal example source file
+/** \brief Blinking Bare Metal driver name
  **
- ** This is a mini example of the CIAA Firmware.
+ **
  **
  **/
 
@@ -42,54 +42,38 @@
 
 /** \addtogroup Examples CIAA Firmware Examples
  ** @{ */
-/** \addtogroup Baremetal Bare Metal example source file
+/** \addtogroup Baremetal Bare Metal TECLA Driver
  ** @{ */
 
 /*
  * Initials     Name
  * ---------------------------
- *
+ *  GLJC        Gassó Loncan, Juan Cruz
  */
 
 /*
  * modification history (new versions first)
  * -----------------------------------------------------------
- * yyyymmdd v0.0.1 initials initial version
+ * 20160428 v0.0.1 initials initial version
  */
 
 /*==================[inclusions]=============================================*/
-#include "blinking.h"       /* <= own header */
-#include "led.h"
 
+#include "chip.h" /*LPCopen*/
+#include "name.h"
 
 /*==================[macros and definitions]=================================*/
-#define DELAY 3000000
+
 /*==================[internal data declaration]==============================*/
 
 /*==================[internal functions declaration]=========================*/
-uint8_t pwmRGB_counter(Color *RGB );
+
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
 
-uint8_t pwmRGB_counter(Color *RGB ){
-	static uint8_t counter;
-
-	while(counter < 256)){
-		if(RGB->R != 0){
-			RGB->R--;
-		}
-		if(RGB->G != 0){
-			RGB->G--;
-				}
-		if(RGB->B != 0){
-			RGB->B--;
-				}
-	};
-	return 0;
-};
 /*==================[external functions definition]==========================*/
 /** \brief Main function
  *
@@ -101,19 +85,7 @@ uint8_t pwmRGB_counter(Color *RGB ){
  *          warnings or errors.
  */
 
- volatile uint32_t var;
 
-int main(void)
-{
-   /* perform the needed initialization here */
-			initLeds();
-
-			while (1){
-
-
-			}
-			return 0;
-}
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
