@@ -71,8 +71,31 @@
 
 /*==================[external functions declaration]=========================*/
 
+/*Inicialización del timer de interrupciones repetidas*/
+void initTimerRIT(void);
 
+/*Seteo de periodo de interrupción en mili segundos*/
+void setPeriodTimerRIT(uint32_t);
 
+/*Habilitación de la interrupciones del Timer RIT*/
+void enableTimerRIT(void);
+
+/*Limpieza del flag de interrupcion del Timer RIT*/
+void clearFlagTimerRIT(void);
+/*Lectura del estado del flag de interrupcion del Timer RIT*/
+uint8_t readFlagTimerRIT(void);
+/*Deshabilita el timer RIT*/
+void disableTimerRIT(void);
+/*Apaga el Timer RIT*/
+void DinitTimerRIT(void);
+
+/*deshabilita las interrupciones*/
+void interup_off(void);
+
+void interup_on(void);
+
+/*Reimplementacion del Chip_RIT_SetTimerInterval para obtener peridos de hasta 0.1ms*/
+void setPeriodTimerRIT_100k(uint32_t time_interval);
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

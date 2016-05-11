@@ -60,8 +60,9 @@
 /*==================[inclusions]=============================================*/
 
 #include "chip.h" /*LPCopen*/
-#include "name.h"
-
+#include "pwm_rgb.h"
+#include "led.h"
+#include "stdlib.h"
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
@@ -69,11 +70,60 @@
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
+Color RGB,*pRGB;
 
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
+uint8_t pwmRGB_counter(void){
+	static uint8_t counter;
 
+	if(counter < 255)
+		{
+		if(pRGB->R != 0){
+			prendeLed_RGB(RED);
+			pRGB->R--;
+		}
+		else{
+			apagaLed_RGB(RED);
+		}
+		if(pRGB->G != 0){
+			prendeLed_RGB(GREEN);
+			pRGB->G--;
+				}
+		else{
+			apagaLed_RGB(GREEN);
+			}
+		if(pRGB->B != 0){
+			prendeLed_RGB(BLUE);
+			pRGB->B--;
+				}
+		else{
+			apagaLed_RGB(BLUE);
+		}
+		counter++;
+		}
+	else{
+		counter=0;
+
+		return TRUE;
+	}
+
+	return FALSE;
+};
+
+void setColorPWM(Color *color_rgb){
+	RGB=*color_rgb;
+	pRGB=&RGB;
+}
+
+Color randColorRGB(void){
+	Color rand_color;
+	rand_color.R=(uint8_t)rand();
+	rand_color.B=(uint8_t)rand();
+	rand_color.G=(uint8_t)rand();
+	return rand_color;
+}
 /*==================[external functions definition]==========================*/
 /** \brief Main function
  *

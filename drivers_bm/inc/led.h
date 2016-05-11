@@ -99,11 +99,6 @@ typedef struct{
 	GPIO green;
 }led;
 
-typedef struct{
-	uint8_t R;
-	uint8_t G;
-	uint8_t B;
-}Color;
 
 /*==================[external data declaration]==============================*/
 /*TODO ¿Esto e así?NO

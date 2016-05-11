@@ -134,7 +134,7 @@ uint8_t scanTeclas(void){
 		Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,GPIO0,PIN_TEC_2)&&
 		Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,GPIO0,PIN_TEC_3)&&
 		Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,GPIO1,PIN_TEC_4)) == FALSE){return TRUE;
-		}
+	}
 	else{
 		return FALSE;
 	}

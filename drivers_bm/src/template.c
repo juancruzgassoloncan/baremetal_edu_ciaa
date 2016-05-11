@@ -60,7 +60,7 @@
 /*==================[inclusions]=============================================*/
 
 #include "chip.h" /*LPCopen*/
-#include "name.h"
+#include "template.h"
 
 /*==================[macros and definitions]=================================*/
 

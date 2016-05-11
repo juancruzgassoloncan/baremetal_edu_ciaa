@@ -31,8 +31,8 @@
  *
  */
 
-#ifndef NAME_H
-#define NAME_H
+#ifndef PWM_RGB_H
+#define PWM_RGB_H
 /** \brief Bare Metal example header file
  **
  ** This is a mini example of the CIAA Firmware
@@ -66,15 +66,21 @@
 #define mk60fx512vlq15     2
 
 /*==================[typedef]================================================*/
+typedef struct{
+	uint8_t R;
+	uint8_t G;
+	uint8_t B;
+}Color;
 
 /*==================[external data declaration]==============================*/
 
 /*==================[external functions declaration]=========================*/
 
-
-
+uint8_t pwmRGB_counter(void);
+void setColorPWM(Color *color_rgb);
+Color randColorRGB(void);
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef NAME_H */
+#endif /* #ifndef PWM_RGB_H */

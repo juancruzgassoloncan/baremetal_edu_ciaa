@@ -84,9 +84,65 @@
  * \remarks This function never returns. Return value is only to avoid compiler
  *          warnings or errors.
  */
+ /*Inicialización del timer de interrupciones repetidas*/
+ void initTimerRIT(void)
+    {
+ 	Chip_RIT_Init(LPC_RITIMER);
+ 	NVIC_ClearPendingIRQ(RITIMER_IRQn);
+ 	Chip_RIT_Disable(LPC_RITIMER);
+    };
 
+ void interup_on(){
+	 NVIC_EnableIRQ(RITIMER_IRQn);
+ }
 
+ /*Seteo de periodo de interrupción en mili segundos*/
+ void setPeriodTimerRIT(uint32_t periodo)
+    {
+    Chip_RIT_SetTimerInterval(LPC_RITIMER,periodo);
+    }
 
+ /*Habilitación de la interrupciones del Timer RIT*/
+ void enableTimerRIT(void){
+//	 NVIC_EnableIRQ(RITIMER_IRQn);
+   Chip_RIT_Enable(LPC_RITIMER);
+ };
+
+ /*Limpieza del flag de interrupciones*/
+ void clearFlagTimerRIT(void){
+     Chip_RIT_ClearInt(LPC_RITIMER);
+ };
+
+uint8_t readFlagTimerRIT(void){
+	return Chip_RIT_GetIntStatus(LPC_RITIMER);
+}
+
+void disableTimerRIT(void){
+	Chip_RIT_Disable(LPC_RITIMER);
+}
+
+void DinitTimerRIT(void){
+	Chip_RIT_DeInit(LPC_RITIMER);
+}
+
+void interup_off(void){
+	NVIC_DisableIRQ(RITIMER_IRQn);
+}
+
+void setPeriodTimerRIT_100k(uint32_t time_interval)
+{
+	uint32_t cmp_value;
+
+	/* Determine aapproximate compare value based on clock rate and passed interval */
+	cmp_value = (Chip_Clock_GetRate(CLK_MX_RITIMER) / 100000) * time_interval;
+
+	/* Set timer compare value */
+	Chip_RIT_SetCOMPVAL(LPC_RITIMER, cmp_value);
+
+	/* Set timer enable clear bit to clear timer to 0 whenever
+	   counter value equals the contents of RICOMPVAL */
+	Chip_RIT_EnableCTRL(LPC_RITIMER, RIT_CTRL_ENCLR);
+}
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

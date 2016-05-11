@@ -31,8 +31,8 @@
  *
  */
 
-#ifndef NAME_H
-#define NAME_H
+#ifndef TEMPLATE_H
+#define TEMPLATE_H
 /** \brief Bare Metal example header file
  **
  ** This is a mini example of the CIAA Firmware
@@ -77,4 +77,4 @@
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef NAME_H */
+#endif /* #ifndef TEMPLATE_H */

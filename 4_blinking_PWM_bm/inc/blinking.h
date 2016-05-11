@@ -103,6 +103,8 @@ void RIT_IRQHandler(void);
 
 /*==================[external functions declaration]=========================*/
 
+void myISR(void);
+void changeMode(void);
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

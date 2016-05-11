@@ -60,36 +60,58 @@
 /*==================[inclusions]=============================================*/
 #include "blinking.h"       /* <= own header */
 #include "led.h"
-
-
+#include "timer.h"
+#include "chip.h"
+#include "tecla.h"
+#include "pwm_rgb.h"
+#include "stdlib.h"
 /*==================[macros and definitions]=================================*/
-#define DELAY 3000000
+#define RG_MODE		1
+#define PWM_MODE	2
 /*==================[internal data declaration]==============================*/
-
+uint8_t mode=1;
 /*==================[internal functions declaration]=========================*/
-uint8_t pwmRGB_counter(Color *RGB );
-/*==================[internal data definition]===============================*/
 
+/*==================[internal data definition]===============================*/
+uint8_t flagISR = FALSE;
+
+Color led_RGB = {0,0,0};
+Color *pled_RGB = &led_RGB;
+
+uint8_t r,g,b;
+uint16_t contador_interrupciones=0;
+uint32_t periodo;
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
+void myISR(){
+	if (readFlagTimerRIT() == TRUE){
+		flagISR = TRUE;
+		clearFlagTimerRIT();
+	}
+	else{
+		asm("nop");
+	}
+}
+void changeMode(void){
+	DinitTimerRIT();
+	if(mode==RG_MODE){
+		contador_interrupciones=0;
+		apagarLeds();
+		mode=PWM_MODE;
+		initTimerRIT();
+		setPeriodTimerRIT_100k(1);
+	}
+	else{
+		apagarLeds();
+		mode=RG_MODE;
+		initTimerRIT();
+		setPeriodTimerRIT_100k(25000);
 
-uint8_t pwmRGB_counter(Color *RGB ){
-	static uint8_t counter;
+	}
 
-	while(counter < 256)){
-		if(RGB->R != 0){
-			RGB->R--;
-		}
-		if(RGB->G != 0){
-			RGB->G--;
-				}
-		if(RGB->B != 0){
-			RGB->B--;
-				}
-	};
-	return 0;
-};
+}
+
 /*==================[external functions definition]==========================*/
 /** \brief Main function
  *
@@ -101,18 +123,61 @@ uint8_t pwmRGB_counter(Color *RGB ){
  *          warnings or errors.
  */
 
- volatile uint32_t var;
 
 int main(void)
 {
    /* perform the needed initialization here */
-			initLeds();
+		initLeds();
+		initTeclas();
+		initTimerRIT();
+		setPeriodTimerRIT(250);
+		interup_on();
+//		changeMode();
 
-			while (1){
+		led_RGB=randColorRGB();
+		setColorPWM(pled_RGB);
+		enableTimerRIT();
+		while (TRUE){
 
-
+			if (scanTeclas()==TRUE){
+				disableTimerRIT();
+				if (leeTecla(TEC_1,FALSE,TRUE)==TRUE){
+					changeMode();
+					}
+				enableTimerRIT();
 			}
-			return 0;
+
+			if (flagISR == TRUE){
+				contador_interrupciones++;
+				if (mode == PWM_MODE){
+					if (pwmRGB_counter()==TRUE){
+						setColorPWM(pled_RGB);
+					}
+					if (contador_interrupciones == 0){
+						led_RGB=randColorRGB();
+					}
+				}
+
+				if(mode == RG_MODE){
+					if (contador_interrupciones == 1){
+						prendeLed(LED_2);
+						apagaLed(GREEN);
+					}
+					else{
+						if(contador_interrupciones == 2){
+							prendeLed(GREEN);
+							apagaLed(LED_2);
+						}
+						else{
+							contador_interrupciones = 0;
+						}
+					}
+				}
+			flagISR = FALSE;
+			}
+
+		}
+		return 0;
 }
 
 /** @} doxygen end group definition */
