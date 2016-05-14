@@ -31,25 +31,24 @@
  *
  */
 
-#ifndef TECLA_H
-#define TECLA_H
-/** \brief Bare Metal example header file
+/** \brief Blinking Bare Metal example source file
  **
- ** This is a mini example of the CIAA Firmware
+ ** This is a mini example of the CIAA Firmware.
  **
  **/
 
 /** \addtogroup CIAA_Firmware CIAA Firmware
  ** @{ */
+
 /** \addtogroup Examples CIAA Firmware Examples
  ** @{ */
-/** \addtogroup Baremetal Bare Metal example header file
+/** \addtogroup Baremetal Bare Metal example source file
  ** @{ */
 
 /*
  * Initials     Name
  * ---------------------------
- *	GLJC        Gassó Loncan, Juan Cruz
+ *	GLJC		Gassó Loncan, Juan Cruz
  */
 
 /*
@@ -59,30 +58,46 @@
  */
 
 /*==================[inclusions]=============================================*/
-#include "stdint.h"
-
-/*==================[macros]=================================================*/
-#define lpc4337            1
-#define mk60fx512vlq15     2
+#include "app_name.h"       /* <= own header */
 
 
+/*==================[macros and definitions]=================================*/
 
-/*==================[typedef]================================================*/
+/*==================[internal data declaration]==============================*/
 
-/*==================[external data declaration]==============================*/
+/*==================[internal functions declaration]=========================*/
 
-/*==================[external functions declaration]=========================*/
+/*==================[internal data definition]===============================*/
 
-void initTeclas(void);
+/*==================[external data definition]===============================*/
 
-uint8_t leeTecla(uint8_t tecla, uint8_t Antirrebote, uint8_t Liberacion);
+/*==================[internal functions definition]==========================*/
 
-uint8_t scanTeclas_EDUCIAA(void);
+/*==================[external functions definition]==========================*/
+/** \brief Main function
+ *
+ * This is the main entry point of the software.
+ *
+ * \returns 0
+ *
+ * \remarks This function never returns. Return value is only to avoid compiler
+ *          warnings or errors.
+ */
+
+ volatile uint32_t var;
+
+int main(void)
+{
+   /* perform the needed initialization here */
+
+			while (1){
 
 
+			}
+			return 0;
+}
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef TECLA_H */

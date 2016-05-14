@@ -81,7 +81,16 @@
 #define PIN_TEC_3 	9
 #define PIN_TEC_4 	9
 
-#define MAX_REBOTES  20
+/*Definiciones para la configuración del uso de los puertos GPIO*/
+#define ENTRADA 	0
+#define SALIDA 		1
+
+/*Definición de las teclas de la EDU_CIAA*/
+#define TEC_1	1
+#define TEC_2	2
+#define TEC_3	3
+#define TEC_4	4
+
 
 /*==================[internal data declaration]==============================*/
 
@@ -129,7 +138,7 @@ void initTeclas(void){
 	Chip_GPIO_SetDir(LPC_GPIO_PORT,GPIO1,PIN_TEC_4_MASK,ENTRADA);
 };
 
-uint8_t scanTeclas(void){
+uint8_t scanTeclas_EDUCIAA(void){
 	if ((Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,GPIO0,PIN_TEC_1)&&
 		Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,GPIO0,PIN_TEC_2)&&
 		Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,GPIO0,PIN_TEC_3)&&

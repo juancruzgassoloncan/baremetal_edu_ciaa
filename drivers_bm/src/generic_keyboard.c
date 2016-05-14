@@ -31,53 +31,103 @@
  *
  */
 
-#ifndef TECLA_H
-#define TECLA_H
-/** \brief Bare Metal example header file
+/** \brief Blinking Bare Metal driver name
  **
- ** This is a mini example of the CIAA Firmware
+ **
  **
  **/
 
 /** \addtogroup CIAA_Firmware CIAA Firmware
  ** @{ */
+
 /** \addtogroup Examples CIAA Firmware Examples
  ** @{ */
-/** \addtogroup Baremetal Bare Metal example header file
+/** \addtogroup Baremetal Bare Metal TECLA Driver
  ** @{ */
 
 /*
  * Initials     Name
  * ---------------------------
- *	GLJC        Gassó Loncan, Juan Cruz
+ *  GLJC        Gassó Loncan, Juan Cruz
  */
 
 /*
  * modification history (new versions first)
  * -----------------------------------------------------------
- * yyyymmdd v0.0.1 initials initial version
+ * 20160428 v0.0.1 initials initial version
  */
 
 /*==================[inclusions]=============================================*/
-#include "stdint.h"
 
-/*==================[macros]=================================================*/
-#define lpc4337            1
-#define mk60fx512vlq15     2
+#include "chip.h" /*LPCopen*/
+#include "generic_keyboard.h"
+#include "timer.h"
+
+/*==================[macros and definitions]=================================*/
+
+/*Declaración de Puertos*/
+ #define PORT_1      1
+ #define PORT_4 	 4
+ #define PORT_7      7
+ 
+ #define PIN_0      0
+ #define PIN_1      1
+ #define PIN_2      2
+ #define PIN_3      3
+ #define PIN_4      4
+ #define PIN_5      5
+ #define PIN_6      6
+/*...*/
+
+/*Declaración de GPIO*/
+ #define GPIO1      1
+ #define GPIO2 		2
+ #define GPIO3      3
 
 
+/*Ir agregando*/
 
-/*==================[typedef]================================================*/
+/*Declaración de los Puertos que confromaran las columnas del teclado matricial*/
+// #define T_COL_0
+// #define T_COL_1
+// #define T_COL_2
+/*Ir agregando*/
+/*==================[internal data declaration]==============================*/
 
-/*==================[external data declaration]==============================*/
+Tecla_Mx filas[4]={
+	{PORT_4,PIN_0,GPIO2,PIN_0},
+	{PORT_4,PIN_1,GPIO2,PIN_1},
+	{PORT_4,PIN_2,GPIO2,PIN_2},
+	{PORT_4,PIN_3,GPIO2,PIN_3}
+};
 
-/*==================[external functions declaration]=========================*/
+Tecla_Mx columnas[3]={
+    {PORT_4,PIN_5,GPIO1,PIN_0},
+    {PORT_1,PIN_4,GPIO3,PIN_0},
+    {PORT_7,PIN_5,GPIO3,PIN_0},
+};
+/*==================[internal functions declaration]=========================*/
 
-void initTeclas(void);
+/*==================[internal data definition]===============================*/
+//filas[0]= {1,2,3,4};
+//    port_pin = 0,
+//    gpio = 2,
+//    gpio_pin = 0;
 
-uint8_t leeTecla(uint8_t tecla, uint8_t Antirrebote, uint8_t Liberacion);
+/*==================[external data definition]===============================*/
 
-uint8_t scanTeclas_EDUCIAA(void);
+/*==================[internal functions definition]==========================*/
+
+/*==================[external functions definition]==========================*/
+/** \brief Main function
+ *
+ * This is the main entry point of the software.
+ *
+ * \returns 0
+ *
+ * \remarks This function never returns. Return value is only to avoid compiler
+ *          warnings or errors.
+ */
 
 
 
@@ -85,4 +135,3 @@ uint8_t scanTeclas_EDUCIAA(void);
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef TECLA_H */

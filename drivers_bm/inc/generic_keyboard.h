@@ -31,8 +31,8 @@
  *
  */
 
-#ifndef TECLA_H
-#define TECLA_H
+#ifndef GENERIC_KEYBOARD_H
+#define GENERIC_KEYBOARD_H
 /** \brief Bare Metal example header file
  **
  ** This is a mini example of the CIAA Firmware
@@ -65,19 +65,17 @@
 #define lpc4337            1
 #define mk60fx512vlq15     2
 
-
-
 /*==================[typedef]================================================*/
+typedef struct{
+    uint8_t port;
+    uint8_t port_pin;
+    uint8_t gpio;
+    uint8_t gpio_pin;
+}Tecla_Mx;
 
 /*==================[external data declaration]==============================*/
 
 /*==================[external functions declaration]=========================*/
-
-void initTeclas(void);
-
-uint8_t leeTecla(uint8_t tecla, uint8_t Antirrebote, uint8_t Liberacion);
-
-uint8_t scanTeclas_EDUCIAA(void);
 
 
 
@@ -85,4 +83,4 @@ uint8_t scanTeclas_EDUCIAA(void);
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef TECLA_H */
+#endif /* #ifndef TEMPLATE_H */
