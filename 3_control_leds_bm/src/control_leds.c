@@ -127,7 +127,7 @@ int main(void)
 	while (1)
 		{
 
-			if (scanTeclas() == TRUE)
+			if (scanTeclas_EDUCIAA() == TRUE)
 				{//apagarLeds();
 					if (leeTecla(TEC_1,TRUE,FALSE) == TRUE)
 						{

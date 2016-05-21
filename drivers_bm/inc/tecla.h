@@ -65,7 +65,33 @@
 #define lpc4337            1
 #define mk60fx512vlq15     2
 
+#define UM_PORT1	 1
 
+/*Definición de los GPIO usados para las TECLAS*/
+#define GPIO0	 0
+#define GPIO1	 1
+
+/*Definiciones de las mascaras para los pines del LED_RGB*/
+#define PIN_TEC_1_MASK (1<<4)
+#define PIN_TEC_2_MASK (1<<8)
+#define PIN_TEC_3_MASK (1<<9)
+#define PIN_TEC_4_MASK (1<<9)
+
+/*Definición de los pines de los TECLAs*/
+#define PIN_TEC_1 	4
+#define PIN_TEC_2 	8
+#define PIN_TEC_3 	9
+#define PIN_TEC_4 	9
+
+/*Definiciones para la configuración del uso de los puertos GPIO*/
+#define ENTRADA 	0
+#define SALIDA 		1
+
+/*Definición de las teclas de la EDU_CIAA*/
+#define TEC_1	1
+#define TEC_2	2
+#define TEC_3	3
+#define TEC_4	4
 
 /*==================[typedef]================================================*/
 

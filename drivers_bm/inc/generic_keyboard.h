@@ -65,6 +65,38 @@
 #define lpc4337            1
 #define mk60fx512vlq15     2
 
+
+/*Declaración de Puertos*/
+ #define PORT_1      1
+ #define PORT_4 	 4
+ #define PORT_7      7
+
+ #define PIN_0      0
+ #define PIN_1      1
+ #define PIN_2      2
+ #define PIN_3      3
+ #define PIN_4      4
+ #define PIN_5      5
+ #define PIN_6      6
+/*...*/
+
+/*Declaración de GPIO*/
+ #define GPIO1      1
+ #define GPIO2 		2
+ #define GPIO3      3
+
+
+/*Ir agregando*/
+
+/*Declaración de los Puertos que confromaran las columnas del teclado matricial*/
+// #define T_COL_0
+// #define T_COL_1
+// #define T_COL_2
+/*Ir agregando*/
+
+/*Dimenciones de teclados */
+#define N_FILAS			4
+#define N_COLUMNAS		3
 /*==================[typedef]================================================*/
 typedef struct{
     uint8_t port;
@@ -77,7 +109,7 @@ typedef struct{
 
 /*==================[external functions declaration]=========================*/
 
-
+void initGenericKeyboard(uint8_t external_keyboard);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

@@ -139,7 +139,7 @@ int main(void)
 		enableTimerRIT();
 		while (TRUE){
 
-			if (scanTeclas()==TRUE){
+			if (scanTeclas_EDUCIAA()==TRUE){
 				disableTimerRIT();
 				if (leeTecla(TEC_1,FALSE,TRUE)==TRUE){
 					changeMode();

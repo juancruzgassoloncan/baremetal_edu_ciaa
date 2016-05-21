@@ -62,46 +62,20 @@
 #include "chip.h" /*LPCopen*/
 #include "generic_keyboard.h"
 #include "timer.h"
+#include "tecla.h"
 
 /*==================[macros and definitions]=================================*/
 
-/*Declaración de Puertos*/
- #define PORT_1      1
- #define PORT_4 	 4
- #define PORT_7      7
- 
- #define PIN_0      0
- #define PIN_1      1
- #define PIN_2      2
- #define PIN_3      3
- #define PIN_4      4
- #define PIN_5      5
- #define PIN_6      6
-/*...*/
-
-/*Declaración de GPIO*/
- #define GPIO1      1
- #define GPIO2 		2
- #define GPIO3      3
-
-
-/*Ir agregando*/
-
-/*Declaración de los Puertos que confromaran las columnas del teclado matricial*/
-// #define T_COL_0
-// #define T_COL_1
-// #define T_COL_2
-/*Ir agregando*/
 /*==================[internal data declaration]==============================*/
 
-Tecla_Mx filas[4]={
+Tecla_Mx filas[N_FILAS]={
 	{PORT_4,PIN_0,GPIO2,PIN_0},
 	{PORT_4,PIN_1,GPIO2,PIN_1},
 	{PORT_4,PIN_2,GPIO2,PIN_2},
 	{PORT_4,PIN_3,GPIO2,PIN_3}
 };
 
-Tecla_Mx columnas[3]={
+Tecla_Mx columnas[N_COLUMNAS]={
     {PORT_4,PIN_5,GPIO1,PIN_0},
     {PORT_1,PIN_4,GPIO3,PIN_0},
     {PORT_7,PIN_5,GPIO3,PIN_0},
@@ -109,14 +83,44 @@ Tecla_Mx columnas[3]={
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
-//filas[0]= {1,2,3,4};
-//    port_pin = 0,
-//    gpio = 2,
-//    gpio_pin = 0;
+
 
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
+
+void initGenericKeyboard(uint8_t external_keyboard){
+	if (external_keyboard != TRUE){
+		initTeclas();
+	}
+	else{
+		uint8_t n_filas;
+		uint8_t n_columnas;
+		Chip_GPIO_Init(LPC_GPIO_PORT);
+		for ( n_filas = N_FILAS ; n_filas = 0; n_filas--) {
+			Chip_SCU_PinMux(filas[n_filas].port,filas[n_filas].port_pin,MD_PUP|MD_EZI,FUNC0);
+			Chip_GPIO_SetDir(LPC_GPIO_PORT,filas[n_filas].gpio,1<<(filas[n_filas].gpio_pin),ENTRADA);
+		}
+		for ( n_columnas = N_COLUMNAS; n_columnas = 0 ; n_columnas--){
+			Chip_SCU_PinMux(columnas[n_columnas].port,columnas[n_columnas].port_pin,MD_PLN,FUNC0);
+			Chip_GPIO_SetDir(LPC_GPIO_PORT,columnas[n_columnas].gpio,(1<<columnas[n_columnas].gpio_pin),SALIDA);
+			Chip_GPIO_ClearValue(LPC_GPIO_PORT,columnas[n_columnas].gpio,(1<<columnas[n_columnas].gpio_pin));
+			}
+		}
+	}
+}
+
+// uint8_t rotaFilas(){
+//
+// 	Chip_GPIO_SetValue(LPC_GPIO_PORT, fila[n_filas].gpio,(1<<fila[n_filas].gpio_pin));
+// };
+void scanTeclas_GenericKeyboard(){
+
+	Chip_GPIO_ReadValue();;
+	}
+
+}
+
 
 /*==================[external functions definition]==========================*/
 /** \brief Main function

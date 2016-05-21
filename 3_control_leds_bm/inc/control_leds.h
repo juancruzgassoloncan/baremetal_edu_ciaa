@@ -31,8 +31,8 @@
  *
  */
 
-#ifndef CONTROLLEDS_H
-#define CONTROLLEDS_H
+#ifndef CONTROL_LEDS_H
+#define CONTROL_LEDS_H
 /** \brief Bare Metal example header file
  **
  ** This is a mini example of the CIAA Firmware
@@ -107,5 +107,5 @@ void RIT_IRQHandler(void);
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef CONTROLLEDS_H */
+#endif /* #ifndef CONTROL_LEDS_H */
 
