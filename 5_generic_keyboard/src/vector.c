@@ -24,7 +24,7 @@
  */
 
 /*==================[inclusions]=============================================*/
-#include "blinking.h"
+#include "app_header.h"
 
 /*==================[macros and definitions]=================================*/
 
@@ -341,4 +341,3 @@ static void RITimerISR(void) {
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-

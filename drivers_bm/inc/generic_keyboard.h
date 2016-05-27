@@ -65,6 +65,8 @@
 #define lpc4337            1
 #define mk60fx512vlq15     2
 
+#define UP			1
+#define DOWN		0
 
 /*Declaración de Puertos*/
  #define PORT_1      1
@@ -94,9 +96,7 @@
 // #define T_COL_2
 /*Ir agregando*/
 
-/*Dimenciones de teclados */
-#define N_FILAS			4
-#define N_COLUMNAS		3
+
 /*==================[typedef]================================================*/
 typedef struct{
     uint8_t port;
@@ -106,10 +106,15 @@ typedef struct{
 }Tecla_Mx;
 
 /*==================[external data declaration]==============================*/
-
+extern uint8_t n_filas;
+extern uint8_t n_columnas;
 /*==================[external functions declaration]=========================*/
 
-void initGenericKeyboard(uint8_t external_keyboard);
+void initGenericKeyboard(Tecla_Mx filas[],Tecla_Mx columnas[]);
+uint8_t scanTeclas_GenericKeyboard(Tecla_Mx filas[],Tecla_Mx columnas[]);
+void clearColumnas(Tecla_Mx columnas[]);
+void setColumnas(Tecla_Mx columnas[]);
+uint8_t detectarTecla(Tecla_Mx filas[],Tecla_Mx columnas[]);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

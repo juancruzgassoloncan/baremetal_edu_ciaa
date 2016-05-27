@@ -59,10 +59,13 @@
 
 /*==================[inclusions]=============================================*/
 #include "app_name.h"       /* <= own header */
+#include "generic_keyboard.h"
 
 
 /*==================[macros and definitions]=================================*/
-
+/*Dimenciones de teclados */
+#define N_FILAS			4
+#define N_COLUMNAS		3
 /*==================[internal data declaration]==============================*/
 
 /*==================[internal functions declaration]=========================*/
@@ -70,7 +73,18 @@
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
+Tecla_Mx filas[N_FILAS]={
+	{PORT_4,PIN_0,GPIO2,PIN_0},
+	{PORT_4,PIN_1,GPIO2,PIN_1},
+	{PORT_4,PIN_2,GPIO2,PIN_2},
+	{PORT_4,PIN_3,GPIO2,PIN_3}
+};
 
+Tecla_Mx columnas[N_COLUMNAS]={
+    {PORT_4,PIN_5,GPIO1,PIN_0},
+    {PORT_1,PIN_4,GPIO3,PIN_0},
+    {PORT_7,PIN_5,GPIO3,PIN_0},
+};
 /*==================[internal functions definition]==========================*/
 
 /*==================[external functions definition]==========================*/
