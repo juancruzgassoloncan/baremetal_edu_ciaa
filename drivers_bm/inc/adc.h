@@ -31,78 +31,58 @@
  *
  */
 
-/** \brief Blinking Bare Metal driver name
+#ifndef ADC_H
+#define ADC_H
+/** \brief Bare Metal example header file
  **
- **
+ ** This is a mini example of the CIAA Firmware
  **
  **/
 
 /** \addtogroup CIAA_Firmware CIAA Firmware
  ** @{ */
-
 /** \addtogroup Examples CIAA Firmware Examples
  ** @{ */
-/** \addtogroup Baremetal Bare Metal TECLA Driver
+/** \addtogroup Baremetal Bare Metal example header file
  ** @{ */
 
 /*
  * Initials     Name
  * ---------------------------
- *  GLJC        Gassó Loncan, Juan Cruz
+ *	GLJC        Gassó Loncan, Juan Cruz
  */
 
 /*
  * modification history (new versions first)
  * -----------------------------------------------------------
- * 20160428 v0.0.1 initials initial version
+ * yyyymmdd v0.0.1 initials initial version
  */
 
 /*==================[inclusions]=============================================*/
+#include "stdint.h"
 
-#include "chip.h" /*LPCopen*/
-#include "dac.h"
+/*==================[macros]=================================================*/
+#define lpc4337            1
+#define mk60fx512vlq15     2
 
-/*==================[macros and definitions]=================================*/
+/*==================[typedef]================================================*/
 
-/*==================[internal data declaration]==============================*/
+/*==================[external data declaration]==============================*/
 
-/*==================[internal functions declaration]=========================*/
+/*==================[external functions declaration]=========================*/
 
-/*==================[internal data definition]===============================*/
+void initADC(uint32_t n_ADC, uint8_t ch_ADC);
 
-/*==================[external data definition]===============================*/
+void ADC_StartConvertion_UP();
 
-/*==================[internal functions definition]==========================*/
+void ADC_StartConvertion_DW();
 
-/*==================[external functions definition]==========================*/
-/** \brief Main function
- *
- * This is the main entry point of the software.
- *
- * \returns 0
- *
- * \remarks This function never returns. Return value is only to avoid compiler
- *          warnings or errors.
- */
+uint8_t ADC_CheckStatus(uint8_t ch_ADC,uint8_t StatusType);
 
-void initDAC(){
-	Chip_SCU_DAC_Analog_Config();
-	Chip_DAC_Init(LPC_DAC);
-	Chip_DAC_SetBias(LPC_DAC, DAC_MAX_UPDATE_RATE_400kHz);
-	Chip_DAC_ConfigDAConverterControl(LPC_DAC,DAC_CNT_ENA|DAC_DMA_ENA);
-}
-
-uint32_t updateDACbuffer(uint32_t buffer){
-	Chip_DAC_UpdateValue(LPC_DAC, buffer);
-	return buffer;
-}
-
-void deinitDAC(){
-	Chip_DAC_DeInit(LPC_DAC);
-}
-
+uint8_t ADC_ReadValue(uint8_t ch_ADC, uint16_t *value);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
+#endif /* #ifndef ADC_H */

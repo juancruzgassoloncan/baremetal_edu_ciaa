@@ -60,7 +60,7 @@
 /*==================[inclusions]=============================================*/
 
 #include "chip.h" /*LPCopen*/
-#include "dac.h"
+#include "adc.h"
 
 /*==================[macros and definitions]=================================*/
 
@@ -69,12 +69,46 @@
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
-
+LPC_ADC_T *ADC_B;
+ADC_CLOCK_SETUP_T ADCSetup;
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
 
 /*==================[external functions definition]==========================*/
+
+void initADC(uint32_t n_ADC, uint8_t ch_ADC){
+    Chip_SCU_ADC_Channel_Config(n_ADC, ch_ADC);
+    switch (n_ADC){
+    	case 0:
+    		ADC_B = LPC_ADC0;
+//    		Chip_ADC_Init(LPC_ADC0,ADC_CLOCK_SETUP_T);
+    		break;
+    	case 1:
+    		ADC_B = LPC_ADC1;
+//    		Chip_ADC_DeInit(LPC_ADC1,ADC_CLOCK_SETUP_T);
+    		break;
+    	default:
+    		ADC_B = LPC_ADC0;
+    }
+    Chip_ADC_Init(ADC_B,&ADCSetup);
+    Chip_ADC_EnableChannel(ADC_B,ch_ADC,ENABLE);
+};
+
+void ADC_StartConvertion_UP(){
+	Chip_ADC_SetStartMode(ADC_B, ADC_START_NOW,ADC_TRIGGERMODE_RISING);
+}
+void ADC_StartConvertion_DW(){
+	Chip_ADC_SetStartMode(ADC_B, ADC_START_NOW,ADC_TRIGGERMODE_FALLING);
+}
+
+uint8_t ADC_CheckStatus(uint8_t ch_ADC,uint8_t StatusType){
+	return Chip_ADC_ReadStatus(ADC_B, ch_ADC, StatusType);
+}
+
+uint8_t ADC_ReadValue(uint8_t ch_ADC, uint16_t *value){
+	return Chip_ADC_ReadValue(ADC_B,ch_ADC,value);
+}
 /** \brief Main function
  *
  * This is the main entry point of the software.
@@ -85,21 +119,6 @@
  *          warnings or errors.
  */
 
-void initDAC(){
-	Chip_SCU_DAC_Analog_Config();
-	Chip_DAC_Init(LPC_DAC);
-	Chip_DAC_SetBias(LPC_DAC, DAC_MAX_UPDATE_RATE_400kHz);
-	Chip_DAC_ConfigDAConverterControl(LPC_DAC,DAC_CNT_ENA|DAC_DMA_ENA);
-}
-
-uint32_t updateDACbuffer(uint32_t buffer){
-	Chip_DAC_UpdateValue(LPC_DAC, buffer);
-	return buffer;
-}
-
-void deinitDAC(){
-	Chip_DAC_DeInit(LPC_DAC);
-}
 
 
 /** @} doxygen end group definition */
