@@ -63,7 +63,7 @@
 #include "dac.h"
 #include "chip.h"
 /*==================[macros and definitions]=================================*/
-#define V_MAX 		3
+
 /*==================[internal data declaration]==============================*/
 uint8_t flagISR = FALSE;
 uint32_t step = 0;
@@ -76,7 +76,7 @@ uint32_t periodo = 0;
 
 /*==================[internal functions definition]==========================*/
 uint32_t setSampleCount(uint8_t Vp){
-	return (Vp/V_MAX)*1024;
+	return (Vp/V_MAX) * DAC_RESOLUTION;
 }
 
 uint32_t setPeriodInterrup(uint32_t periodo_us, uint8_t VP){
