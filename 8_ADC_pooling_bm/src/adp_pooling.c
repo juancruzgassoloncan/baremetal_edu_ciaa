@@ -65,8 +65,8 @@
 
 
 /*==================[macros and definitions]=================================*/
-#define MIN_VALUE  5
-#define MAX_VALUE  1020
+#define MIN_VALUE  50
+#define MAX_VALUE  900
 /*==================[internal data declaration]==============================*/
 
 /*==================[internal functions declaration]=========================*/
@@ -106,13 +106,14 @@ int main(void)
 
 				if (valor <= MIN_VALUE){
 					apagarLeds();
-					prendeLed(GREEN);
+					prendeLed(LED_3); //LED Verde
 				}else{
 					if (valor >= MAX_VALUE){
 						apagarLeds();
-						prendeLed(LED_2);//ROJO
+						prendeLed(LED_2);// LED Rojo
 					}else{
 						apagarLeds();
+		                prendeLed(LED_1);// LED Amarrillo
 					}
 				}
 
