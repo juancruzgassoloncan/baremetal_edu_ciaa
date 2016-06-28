@@ -128,16 +128,16 @@ int main(void)
 		{
 
 			if (scanTeclas_EDUCIAA() == TRUE)
-				{//apagarLeds();
+				{
 					if (leeTecla(TEC_1,TRUE,FALSE) == TRUE)
 						{
 							descuentaIndice();
-							//num_led--;
+
 						}
 					if (leeTecla(TEC_4,TRUE,FALSE) == TRUE)
 						{
 							aumentaIndice(num_led);
-							//num_led++;
+
 						}
 					apagarLeds();
 					parpadea(num_led,DELAY);
@@ -145,9 +145,9 @@ int main(void)
 				}
 			else
 				{
-//					asm("nop");
+
 				parpadea(num_led,DELAY);
-//				num_led++;
+
 				}
 		}
 	return 0;
