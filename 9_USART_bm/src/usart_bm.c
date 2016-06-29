@@ -60,7 +60,7 @@
 /*==================[inclusions]=============================================*/
 #include "usart_bm.h"       /* <= own header */
 #include "usart.h"
-#include "chip.h"
+#include "led.h"
 
 /*==================[macros and definitions]=================================*/
 
@@ -86,19 +86,39 @@
  */
 
  uint32_t baud = 115200;
- uint8_t  byte = 0;
-
+ char  byte = 0;
+ char cadena[] = "Hola Mundo! ";
 int main(void)
 {
    /* perform the needed initialization here */
+	initLeds();
 	initUSART_USB(baud);
 
+
 			while (1){
-//				while (Chip_UART_ReadLineStatus(LPC_USART2) != UART_LSR_RDR){};
+
+
 				byte = UARTUSB_Rx_readByte();
-//				while (Chip_UART_ReadLineStatus(LPC_USART2) != UART_LSR_RDR){};
-				if (byte == 0x55){
-					UARTUSB_Tx_sendByte(byte);
+				switch (byte) {
+					case 'a':
+						apagarLeds();
+						prendeLed(LED_1);
+						USARTUB_sendString(cadena);
+						break;
+
+					case 'r':
+						apagarLeds();
+						prendeLed(LED_2);
+						USARTUB_sendString(cadena);
+						break;
+					case 'v':
+						apagarLeds();
+						prendeLed(LED_3);
+						USARTUB_sendString(cadena);
+						break;
+
+					default:
+						break;
 				}
 
 

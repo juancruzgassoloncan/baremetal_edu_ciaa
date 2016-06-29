@@ -102,7 +102,11 @@ void UARTUSB_Tx_sendByte(uint8_t byte){
 	Chip_UART_SendByte(LPC_USART2, byte);
 }
 
-
+void USARTUB_sendString(char* string){
+	int largo = 0;
+	while (string[largo]!='\0') largo++;
+	Chip_UART_SendBlocking(LPC_USART2, string, largo);
+}
 /** \brief Main function
  *
  * This is the main entry point of the software.
