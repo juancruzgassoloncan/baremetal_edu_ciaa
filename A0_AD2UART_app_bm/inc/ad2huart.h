@@ -31,24 +31,25 @@
  *
  */
 
-/** \brief Blinking Bare Metal example source file
+#ifndef APP_NAME_H
+#define APP_NAME_H
+/** \brief Bare Metal example header file
  **
- ** This is a mini example of the CIAA Firmware.
+ ** This is a mini example of the CIAA Firmware
  **
  **/
 
 /** \addtogroup CIAA_Firmware CIAA Firmware
  ** @{ */
-
 /** \addtogroup Examples CIAA Firmware Examples
  ** @{ */
-/** \addtogroup Baremetal Bare Metal example source file
+/** \addtogroup Baremetal Bare Metal example header file
  ** @{ */
 
 /*
  * Initials     Name
  * ---------------------------
- *	GLJC		Gassó Loncan, Juan Cruz
+ *
  */
 
 /*
@@ -58,75 +59,52 @@
  */
 
 /*==================[inclusions]=============================================*/
-#include "usart_bm.h"       /* <= own header */
-#include "usart.h"
-#include "led.h"
+#include "stdint.h"
 
-/*==================[macros and definitions]=================================*/
+/*==================[macros]=================================================*/
+#define lpc4337            1
+#define mk60fx512vlq15     2
 
-/*==================[internal data declaration]==============================*/
+/*==================[typedef]================================================*/
 
-/*==================[internal functions declaration]=========================*/
+/*==================[external data declaration]==============================*/
+#if (CPU == mk60fx512vlq15)
+/* Reset_Handler is defined in startup_MK60F15.S_CPP */
+void Reset_Handler( void );
 
-/*==================[internal data definition]===============================*/
- uint32_t baud = 115200;
- char  byte = 0;
- char cadena[] = "Hola Mundo! ";
-/*==================[external data definition]===============================*/
+extern uint32_t __StackTop;
+#elif (CPU == lpc4337)
+/** \brief Reset ISR
+ **
+ ** ResetISR is defined in cr_startup_lpc43xx.c
+ **
+ ** \remark the definition is in
+ **         externals/drivers/cortexM4/lpc43xx/src/cr_startup_lpc43xx.c
+ **/
+extern void ResetISR(void);
 
-/*==================[internal functions definition]==========================*/
-
-/*==================[external functions definition]==========================*/
-/** \brief Main function
- *
- * This is the main entry point of the software.
- *
- * \returns 0
- *
- * \remarks This function never returns. Return value is only to avoid compiler
- *          warnings or errors.
- */
-
-
-int main(void)
-{
-   /* perform the needed initialization here */
-	initLeds();
-	initUSART_USB(baud);
+/** \brief Stack Top address
+ **
+ ** External declaration for the pointer to the stack top from the Linker Script
+ **
+ ** \remark only a declaration is needed, there is no definition, the address
+ **         is set in the linker script:
+ **         externals/base/cortexM4/lpc43xx/linker/ciaa_lpc4337.ld.
+ **/
+extern void _vStackTop(void);
 
 
-			while (1){
+
+void RIT_IRQHandler(void);
 
 
-				byte = UARTUSB_Rx_readByte();
-				switch (byte) {
-					case 'a':
-						apagarLeds();
-						prendeLed(LED_1);
-						USARTUB_sendString(cadena);
-						break;
+#else
+#endif
 
-					case 'r':
-						apagarLeds();
-						prendeLed(LED_2);
-						USARTUB_sendString(cadena);
-						break;
-					case 'v':
-						apagarLeds();
-						prendeLed(LED_3);
-						USARTUB_sendString(cadena);
-						break;
-
-					default:
-						break;
-				}
-
-
-			}
-			return 0;
-}
+/*==================[external functions declaration]=========================*/
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
+#endif /* #ifndef APP_NAME_H */

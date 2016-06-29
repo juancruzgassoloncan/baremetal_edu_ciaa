@@ -58,9 +58,8 @@
  */
 
 /*==================[inclusions]=============================================*/
-#include "usart_bm.h"       /* <= own header */
-#include "usart.h"
-#include "led.h"
+#include "ad2huart.h"       /* <= own header */
+
 
 /*==================[macros and definitions]=================================*/
 
@@ -69,9 +68,7 @@
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
- uint32_t baud = 115200;
- char  byte = 0;
- char cadena[] = "Hola Mundo! ";
+
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
@@ -91,35 +88,8 @@
 int main(void)
 {
    /* perform the needed initialization here */
-	initLeds();
-	initUSART_USB(baud);
-
 
 			while (1){
-
-
-				byte = UARTUSB_Rx_readByte();
-				switch (byte) {
-					case 'a':
-						apagarLeds();
-						prendeLed(LED_1);
-						USARTUB_sendString(cadena);
-						break;
-
-					case 'r':
-						apagarLeds();
-						prendeLed(LED_2);
-						USARTUB_sendString(cadena);
-						break;
-					case 'v':
-						apagarLeds();
-						prendeLed(LED_3);
-						USARTUB_sendString(cadena);
-						break;
-
-					default:
-						break;
-				}
 
 
 			}
