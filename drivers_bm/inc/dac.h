@@ -65,7 +65,7 @@
 #define lpc4337            1
 #define mk60fx512vlq15     2
 
-#define V_MAX 		3
+#define V_MAX 		3000
 #define DAC_RESOLUTION 1024
 /*==================[typedef]================================================*/
 

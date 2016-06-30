@@ -87,7 +87,7 @@ uint32_t cuentas;
 
 /*==================[internal functions definition]==========================*/
 uint32_t setSampleCount(uint8_t Vp){
-	return (Vp/V_MAX) * DAC_RESOLUTION;
+	return (Vp * DAC_RESOLUTION)/V_MAX;
 }
 
 uint32_t setPeriodInterrup(uint32_t periodo_10us, uint8_t VP){
@@ -146,8 +146,9 @@ int main(void)
 							prendeLed(LED_3);
 							amplitud++;
 						}else{
-							enciendeLeds(LED_2);
+							prendeLed(LED_2);
 						}
+						apagarLeds();
 					}
 					if (leeTecla(TEC_2,FALSE,FALSE) == TRUE ){
 						if (amplitud > AMP_MIN){
