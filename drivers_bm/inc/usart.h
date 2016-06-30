@@ -74,7 +74,7 @@
 void initUSART_USB(uint32_t baud);
 void UARTUSB_Tx_sendByte(uint8_t byte);
 uint8_t UARTUSB_Rx_readByte();
-void USARTUB_sendString(char* string);
+void UARTUSB_sendString(char* string);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
