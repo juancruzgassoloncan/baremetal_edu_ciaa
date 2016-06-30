@@ -141,9 +141,12 @@ int main(void)
 			while (1){
 				if (scanTeclas_EDUCIAA() == TRUE){
 					disableTimerRIT();
-					if (leeTecla(TEC_1,FALSE,FALSE) == TRUE ){
+					while (leeTecla(TEC_1,FALSE,FALSE) == TRUE ){
 						if (amplitud < AMP_MAX){
+							prendeLed(LED_3);
 							amplitud++;
+						}else{
+							enciendeLeds(LED_2);
 						}
 					}
 					if (leeTecla(TEC_2,FALSE,FALSE) == TRUE ){
