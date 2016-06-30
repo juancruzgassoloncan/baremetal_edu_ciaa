@@ -84,7 +84,7 @@
  *          warnings or errors.
  */
 
- volatile uint32_t var;
+
 
 int main(void)
 {

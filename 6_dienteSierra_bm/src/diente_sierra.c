@@ -128,11 +128,7 @@ int main(void)
 
 	while (1){
 		if (flagISR == TRUE){
-//			step++;
-//			if (step == 1024){
-//				step = 0;
-//			}
-//			updateDACbuffer(step);
+
 			flagISR = FALSE;
 			}
 

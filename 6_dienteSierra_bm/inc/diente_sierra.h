@@ -105,7 +105,7 @@ void RIT_IRQHandler(void);
 
 void myISR(void);
 uint32_t setSampleCount(uint8_t Vp);
-uint32_t setSampleStep(uint8_t Vmax);
+uint32_t setPeriodInterrup(uint32_t periodo_10us, uint8_t VP);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
