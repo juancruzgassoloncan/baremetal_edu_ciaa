@@ -103,18 +103,18 @@ int main(void)
 					case 'a':
 						apagarLeds();
 						prendeLed(LED_1);
-						USARTUB_sendString(cadena);
+						UARTUSB_sendString(cadena);
 						break;
 
 					case 'r':
 						apagarLeds();
 						prendeLed(LED_2);
-						USARTUB_sendString(cadena);
+						UARTUSB_sendString(cadena);
 						break;
 					case 'v':
 						apagarLeds();
 						prendeLed(LED_3);
-						USARTUB_sendString(cadena);
+						UARTUSB_sendString(cadena);
 						break;
 
 					default:
