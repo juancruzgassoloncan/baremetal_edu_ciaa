@@ -67,8 +67,17 @@
 #include "timer.h"
 #include "chip.h"
 /*==================[macros and definitions]=================================*/
-#define T_10HZ  100 /*100ms*/
+#define T_10HZ  100
+#define T_100HZ  10
+#define T_1KHZ   1
 #define ADC_0  0
+#define	BAUD_115200  115200
+#define MAX_AMP  1023
+
+#define MOD_1  1
+#define MOD_2  2
+#define MOD_3  3
+#define MOD_4  4
 /*==================[internal data declaration]==============================*/
 
 /*==================[internal functions declaration]=========================*/
@@ -78,6 +87,12 @@ uint16_t amp = 0;
 uint16_t step = 0;
 uint8_t flagISR = FALSE;
 uint16_t valor_ad = 0;
+uint8_t modo = MOD_4;
+
+char cadena_1[] = " Aumento la ganancia\n\r";
+char cadena_2[] = " Disminuyo la ganancia\n\r";
+char cadena_3[] = " MUTE\n\r";
+char cadena_4[] = " ...\n\r";
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
@@ -90,13 +105,30 @@ void myISR(){
 		ADC_StartConvertion_UP();
 		while(ADC_CheckStatus(ADC_CH1,ADC_DR_DONE_STAT) != SET){}
 		ADC_ReadValue(ADC_CH1,&valor_ad);
+		toggleLed(LED_1);
 
-		amp = valor_ad;
-		step++;
-		if (step == amp){
-				step = 0;
+		switch (modo) {
+			case MOD_1:
+				amp = valor_ad * 2;
+				if (amp > MAX_AMP){
+					amp = MAX_AMP;
+				}
+				break;
+			case MOD_2:
+				amp = valor_ad / 2;
+				break;
+			case MOD_3:
+				amp = 0;
+				break;
+			case MOD_4:
+				amp = valor_ad;
+				break;
+			default:
+				amp = valor_ad;
+				break;
 		}
-		updateDACbuffer(step);
+
+		updateDACbuffer(amp);
 
 
 		clearFlagTimerRIT();
@@ -123,24 +155,34 @@ int main(void)
 	initDAC();
 	initTeclas();
 	initTimerRIT();
+	initUSART_USB(BAUD_115200);
 
-	setPeriodTimerRIT(T_10HZ);
+	setPeriodTimerRIT(T_1KHZ);
 	interup_on();
 	enableTimerRIT();
 
 			while (1){
 				if (scanTeclas_EDUCIAA() == TRUE){
 					if (leeTecla(TEC_1,FALSE,TRUE) == TRUE ){
-						toggleLed_RGB(BLUE);
+
+						UARTUSB_sendString(cadena_1);
+						modo = MOD_1;
+
 					}
 					if (leeTecla(TEC_2,FALSE,TRUE) == TRUE ){
-						toggleLed(LED_1);
+
+						UARTUSB_sendString(cadena_2);
+						modo = MOD_2;
 					}
 					if (leeTecla(TEC_3,FALSE,TRUE) == TRUE ){
-						toggleLed(LED_2);
+
+						UARTUSB_sendString(cadena_3);
+						modo = MOD_3;
 					}
 					if (leeTecla(TEC_4,FALSE,TRUE) == TRUE ){
-						toggleLed(LED_3);
+
+						UARTUSB_sendString(cadena_4);
+						modo = MOD_4;
 					}
 				}
 
