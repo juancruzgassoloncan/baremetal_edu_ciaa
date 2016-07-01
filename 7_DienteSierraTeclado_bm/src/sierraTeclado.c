@@ -68,15 +68,18 @@
 
 /*==================[macros and definitions]=================================*/
 #define AMP_MAX  3000
-#define AMP_MIN  100
-#define T_MAX	100000
-#define T_MIN	10000
+#define AMP_MIN  1000
+#define T_MAX	100000 /*1s*/
+#define T_MIN	3000	/*10us*/
+#define PASO_A	50
+#define PASO_T	100
+#define DELAY	300000
 /*==================[internal data declaration]==============================*/
 uint8_t flagISR = FALSE;
 uint32_t step = 0;
 uint32_t periodoIT = 0;
-uint32_t periodo_10us = 100000;
-uint16_t amplitud = 2000;
+uint32_t periodo_10us = T_MAX/2;
+uint16_t amplitud = AMP_MAX/2;
 uint32_t cuentas;
 
 /*==================[internal functions declaration]=========================*/
@@ -86,11 +89,19 @@ uint32_t cuentas;
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
-uint32_t setSampleCount(uint8_t Vp){
+void delay(uint32_t cuentas)
+	{
+	uint32_t i;
+		for (i=cuentas;i!=0;i--)
+		{
+			asm("nop");
+		};
+	};
+uint32_t setSampleCount(uint16_t Vp){
 	return (Vp * DAC_RESOLUTION)/V_MAX;
 }
 
-uint32_t setPeriodInterrup(uint32_t periodo_10us, uint8_t VP){
+uint32_t setPeriodInterrup(uint32_t periodo_10us, uint16_t VP){
 	uint32_t cSample = setSampleCount(VP);
 	uint32_t periodoInterrup;
 	periodoInterrup = periodo_10us/cSample;
@@ -141,35 +152,51 @@ int main(void)
 			while (1){
 				if (scanTeclas_EDUCIAA() == TRUE){
 					disableTimerRIT();
-					while (leeTecla(TEC_1,FALSE,FALSE) == TRUE ){
+					if (leeTecla(TEC_1,FALSE,TRUE) == TRUE ){
 						if (amplitud < AMP_MAX){
 							prendeLed(LED_3);
-							amplitud++;
+							amplitud+=50;
 						}else{
 							prendeLed(LED_2);
+							amplitud = AMP_MAX;
 						}
-						apagarLeds();
+
 					}
-					if (leeTecla(TEC_2,FALSE,FALSE) == TRUE ){
+					if (leeTecla(TEC_2,FALSE,TRUE) == TRUE ){
 						if (amplitud > AMP_MIN){
-							amplitud--;
+							prendeLed(LED_3);
+							amplitud-=50;
+						}else{
+							prendeLed(LED_2);
+							amplitud = AMP_MIN;
 						}
 					}
-					if (leeTecla(TEC_3,FALSE,FALSE) == TRUE ){
+					if (leeTecla(TEC_3,FALSE,TRUE) == TRUE ){
 						if (periodo_10us < T_MAX){
-							periodo_10us++;
+							prendeLed(LED_3);
+							periodo_10us+=500;
+						}else{
+							prendeLed(LED_2);
+							periodo_10us = T_MAX;
 						}
 
 					}
-					if (leeTecla(TEC_4,FALSE,FALSE) == TRUE ){
+					if (leeTecla(TEC_4,FALSE,TRUE) == TRUE ){
 						if (periodo_10us > T_MIN){
-							periodo_10us--;
+							prendeLed(LED_3);
+							periodo_10us-=500;
+						}else{
+							prendeLed(LED_2);
+							periodo_10us = T_MIN;
 						}
 
 					}
+					cuentas = setSampleCount(amplitud);
 					periodoIT = setPeriodInterrup(periodo_10us,amplitud);
 					setPeriodTimerRIT_100k(periodoIT);
 					enableTimerRIT();
+					delay(DELAY);
+					apagarLeds();
 				}
 			}
 			return 0;

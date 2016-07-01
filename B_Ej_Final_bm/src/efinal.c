@@ -96,7 +96,7 @@ char cadena_4[] = " ...\n\r";
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
-//void imprimirSenial(uint16_t valor){};
+
 /*==================[external functions definition]==========================*/
 void myISR(){
 	if (readFlagTimerRIT() == TRUE){

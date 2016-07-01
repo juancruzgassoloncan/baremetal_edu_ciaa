@@ -102,10 +102,10 @@ void RIT_IRQHandler(void);
 #endif
 
 /*==================[external functions declaration]=========================*/
-uint32_t setSampleCount(uint8_t Vp);
-uint32_t setPeriodInterrup(uint32_t periodo_us, uint8_t VP);
+uint32_t setSampleCount(uint16_t Vp);
+uint32_t setPeriodInterrup(uint32_t periodo_us, uint16_t VP);
 void myISR();
-
+void delay(uint32_t cuentas);
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
